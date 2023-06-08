@@ -7,7 +7,17 @@ const config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-roboto-mono)", ...fontFamily.sans],
+        mono: ["var(--font-space-mono)", ...fontFamily.mono],
+      },
+      aspectRatio: {
+        "10/16": "10 / 16",
+      },
+      borderWidth: {
+        1: "1px",
+        3: "3px",
+      },
+      boxShadow: {
+        all: "0 0 20px rgb(0 0 0 / 0.1)",
       },
     },
   },

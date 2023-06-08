@@ -3,7 +3,7 @@ import { type NextPage } from "next";
 import { type AppProps } from "next/app";
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
-import { NextUIProvider } from "@nextui-org/react";
+import { NextUIProvider, useSSR } from "@nextui-org/react";
 
 import ErrorBoundary from "./_error-boundary";
 
@@ -25,12 +25,18 @@ const MyApp = ({
   pageProps: { session, ...pageProps },
 }: AppPropsWithLayout) => {
   const getLayout = Component.getLayout ?? ((page) => page);
+  // fix When server rendering, you must wrap your application in an <SSRProvider> to ensure consistent ids are generated between the client and server.
+  const { isBrowser } = useSSR();
 
   return (
     <SessionProvider session={session}>
-      <NextUIProvider theme={theme}>
-        <ErrorBoundary>{getLayout(<Component {...pageProps} />)}</ErrorBoundary>
-      </NextUIProvider>
+      {isBrowser && (
+        <NextUIProvider theme={theme}>
+          <ErrorBoundary>
+            {getLayout(<Component {...pageProps} />)}
+          </ErrorBoundary>
+        </NextUIProvider>
+      )}
     </SessionProvider>
   );
 };

@@ -1,3 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --blue-rgb: 33 150 243;
+}
+
+@layer components {
+  @keyframes pan-overlay {
+    from {
+      background-position: 0% 0%;
+    }
+    to {
+      background-position: 0% -100%;
+    }
+  }
+
+  .screen-overlay {
+    background: linear-gradient(
+      rgb(var(--blue-rgb) / 0.05),
+      rgb(var(--blue-rgb) / 0.05) 2px,
+      transparent 2px,
+      transparent 11px
+    );
+    background-size: 100% 11px;
+    height: 100%;
+    width: 100%;
+    animation: pan-overlay 33s infinite linear;
+    position: absolute;
+  }
+}
+
